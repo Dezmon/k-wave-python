@@ -171,7 +171,7 @@ if __name__ == '__main__':
             data_cast=DATA_CAST,
             data_recast=True,
             save_to_disk=True,
-            input_filename=input_filename,
+            input_filename=input_file_full_path,
             save_to_disk_exit=False
         )
         # run the simulation
@@ -182,7 +182,7 @@ if __name__ == '__main__':
                 source=not_transducer,
                 sensor=not_transducer,
                 simulation_options=simulation_options,
-                execution_options=SimulationExecutionOptions()
+                execution_options=SimulationExecutionOptions(num_threads=16)
             )
 
         # update medium position
@@ -190,6 +190,8 @@ if __name__ == '__main__':
 
     if RUN_SIMULATION:
         simulation_data = np.stack(simulation_data, axis=0)
+        ### should this be 
+        simulation_data = np.stack(sensor_data_data, axis=0)
         # scipy.io.savemat('sensor_data.mat', {'sensor_data_all_lines': simulation_data})
 
     else:
@@ -208,6 +210,6 @@ if __name__ == '__main__':
     focal_depth = 20e-3  # [m]
     channel_data = build_channel_data(simulation_data, kgrid, not_transducer,
                                       sampling_frequency, prf, focal_depth)
-
+    ####this is coming back wrong... maybe simulation_data is something other than sensor_data???
     print("Beamforming channel data and reconstructing the image...")
     beamform(channel_data)

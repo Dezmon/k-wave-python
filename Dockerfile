@@ -7,4 +7,4 @@ COPY pyproject.toml .
 COPY README.md .
 COPY LICENSE .
 COPY kwave/ kwave
-RUN pip install '.[test]'
+#RUN pip install '.[test]'
